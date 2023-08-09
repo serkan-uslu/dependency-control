@@ -1,6 +1,7 @@
 {
     "name": "npm-check-version",
     "version": "1.0.0",
+    "type": "module",
     "description": "",
     "main": "index.js",
     "scripts": {
@@ -14,12 +15,13 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "fs": "^0.0.1-security"
+        "fs": "^0.0.1-security",
+        "semver": "^7.5.4"
     },
     "devDependencies": {
         "eslint": "^8.46.0",
         "eslint-config-prettier": "^9.0.0",
-        "prettier": "^3.0.1",
-        "husky": "^8.0.0"
+        "husky": "^8.0.0",
+        "prettier": "^3.0.1"
     }
 }
