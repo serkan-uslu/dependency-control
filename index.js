@@ -5,7 +5,7 @@ import { exec as execCb } from 'child_process'
 
 const exec = promisify(execCb)
 
-async function checkForUpdates() {
+async function checkForUpdates({ dryRun = false, autoUpdate = false } = {}) {
     const rawData = fs.readFileSync('package.json')
     const pkg = JSON.parse(rawData)
     const dependencies = { ...pkg.dependencies, ...pkg.devDependencies }
@@ -19,20 +19,19 @@ async function checkForUpdates() {
         updateCommands: [],
     }
 
-    for (let [dep, version] of Object.entries(dependencies)) {
+    const tasks = Object.entries(dependencies).map(async ([dep, version]) => {
         const detail = {
             usedVersion: version,
         }
 
         try {
-            const { stdout: latestVersionStdout } = await exec(
-                `npm show ${dep} version`
-            )
-            const latestVersion = latestVersionStdout.trim()
-            const { stdout: lastUpdateTimeStdout } = await exec(
-                `npm show ${dep} time --json`
-            )
-            const lastUpdateTime = JSON.parse(lastUpdateTimeStdout)
+            const [latestVersionRes, lastUpdateTimeRes] = await Promise.all([
+                exec(`npm show ${dep} version`),
+                exec(`npm show ${dep} time --json`),
+            ])
+
+            const latestVersion = latestVersionRes.stdout.trim()
+            const lastUpdateTime = JSON.parse(lastUpdateTimeRes.stdout)
 
             detail.latestVersion = latestVersion
             detail.lastUpdate = lastUpdateTime[latestVersion]
@@ -40,9 +39,12 @@ async function checkForUpdates() {
 
             if (detail.hasUpdate) {
                 output.summary.outdated++
-                output.updateCommands.push(
-                    `npm install ${dep}@${latestVersion}`
-                )
+                const updateCommand = `npm install ${dep}@${latestVersion}`
+                output.updateCommands.push(updateCommand)
+
+                if (autoUpdate && !dryRun) {
+                    await exec(updateCommand)
+                }
             } else {
                 output.summary.upToDate++
             }
@@ -51,10 +53,23 @@ async function checkForUpdates() {
         } catch (err) {
             console.error(`Error checking version of ${dep}: ${err}`)
         }
-    }
 
-    fs.writeFileSync('detailedReport.json', JSON.stringify(output, null, 2))
-    console.log(`Detailed report is saved to "detailedReport.json".`)
+        console.log(`Checked ${dep}.`)
+    })
+
+    await Promise.all(tasks)
+
+    if (!dryRun) {
+        fs.writeFileSync('detailedReport.json', JSON.stringify(output, null, 2))
+        console.log(`Detailed report is saved to "detailedReport.json".`)
+    } else {
+        console.log('Dry run completed. No files written.')
+    }
 }
 
-checkForUpdates()
+// Simple CLI interface
+const args = process.argv.slice(2)
+const dryRun = args.includes('--dryRun')
+const autoUpdate = args.includes('--autoUpdate')
+
+checkForUpdates({ dryRun, autoUpdate })

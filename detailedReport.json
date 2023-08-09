@@ -22,17 +22,17 @@
             "lastUpdate": "2023-07-28T16:05:20.605Z",
             "hasUpdate": false
         },
-        "eslint-config-prettier": {
-            "usedVersion": "^9.0.0",
-            "latestVersion": "9.0.0",
-            "lastUpdate": "2023-08-05T19:09:15.001Z",
-            "hasUpdate": false
-        },
         "husky": {
             "usedVersion": "^8.0.0",
             "latestVersion": "8.0.3",
             "lastUpdate": "2023-01-03T08:01:18.807Z",
             "hasUpdate": true
+        },
+        "eslint-config-prettier": {
+            "usedVersion": "^9.0.0",
+            "latestVersion": "9.0.0",
+            "lastUpdate": "2023-08-05T19:09:15.001Z",
+            "hasUpdate": false
         },
         "prettier": {
             "usedVersion": "^3.0.1",
