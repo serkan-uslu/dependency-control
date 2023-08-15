@@ -5,8 +5,14 @@ import { exec as execCb } from 'child_process'
 
 const exec = promisify(execCb)
 
-async function checkForUpdates({ dryRun = false, autoUpdate = false } = {}) {
-    const rawData = fs.readFileSync('package.json')
+const dependenciesControl = async (path) => {
+
+    const args = process.argv.slice(2)
+    const dryRun = args.includes('--dryRun')
+    const autoUpdate = args.includes('--autoUpdate')
+
+
+    const rawData = fs.readFileSync(path)
     const pkg = JSON.parse(rawData)
     const dependencies = { ...pkg.dependencies, ...pkg.devDependencies }
 
@@ -54,7 +60,7 @@ async function checkForUpdates({ dryRun = false, autoUpdate = false } = {}) {
             console.error(`Error checking version of ${dep}: ${err}`)
         }
 
-        console.log(`Checked ${dep}.`)
+        // console.log(`Checked ${dep}.`)
     })
 
     await Promise.all(tasks)
@@ -67,9 +73,4 @@ async function checkForUpdates({ dryRun = false, autoUpdate = false } = {}) {
     }
 }
 
-// Simple CLI interface
-const args = process.argv.slice(2)
-const dryRun = args.includes('--dryRun')
-const autoUpdate = args.includes('--autoUpdate')
-
-checkForUpdates({ dryRun, autoUpdate })
+export default dependenciesControl;
