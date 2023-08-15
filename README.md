@@ -1,10 +1,10 @@
-# Dependency Checker
+# Dependency Control
 
 This tool checks the versions of dependencies in a package.json file, compares them to the latest versions available on npm, and then creates a detailed report.
- 
+
 ## Features
 
-The Dependency Checker is designed to help developers keep their Node.js projects up to date. By comparing the versions of dependencies in your package.json file to those available on npm, it generates a detailed report, listing which packages are out of date and suggesting commands for updating them. Advanced features include parallel processing for faster results, improved error handling, and command-line options for both a dry run (checking without making changes) and automatic updating.
+The Dependency Control is designed to help developers keep their Node.js projects up to date. By comparing the versions of dependencies in your package.json file to those available on npm, it generates a detailed report, listing which packages are out of date and suggesting commands for updating them. Advanced features include parallel processing for faster results, improved error handling, and command-line options for both a dry run (checking without making changes) and automatic updating.
 
 ## How it Works
 
@@ -12,8 +12,7 @@ Clone the repository.
 Navigate to the project folder.
 Run the script using node index.js. Use flags --dryRun and --autoUpdate as desired.
 
-
- ## Sample Report Content
+## Sample Report Content
 
 ```json
 {
@@ -66,8 +65,8 @@ Run the script using node index.js. Use flags --dryRun and --autoUpdate as desir
 ---
 
 ## Özellikler
- 
-Dependency Checker, geliştiricilere Node.js projelerini güncel tutmalarına yardımcı olmak için tasarlanmıştır. package.json dosyanızdaki bağımlılıkların sürümlerini npm'de bulunanlarla karşılaştırarak, hangi paketlerin güncel olmadığını listeler ve bunları güncellemek için komutlar önerir. Gelişmiş özelliklere paralel işlem için hızlı sonuçlar, geliştirilmiş hata işleme ve hem kuru çalışma (değişiklik yapmadan kontrol etme) hem de otomatik güncelleme için komut satırı seçenekleri dahildir.
+
+Dependency Control, geliştiricilere Node.js projelerini güncel tutmalarına yardımcı olmak için tasarlanmıştır. package.json dosyanızdaki bağımlılıkların sürümlerini npm'de bulunanlarla karşılaştırarak, hangi paketlerin güncel olmadığını listeler ve bunları güncellemek için komutlar önerir. Gelişmiş özelliklere paralel işlem için hızlı sonuçlar, geliştirilmiş hata işleme ve hem kuru çalışma (değişiklik yapmadan kontrol etme) hem de otomatik güncelleme için komut satırı seçenekleri dahildir.
 
 ## Kullanım
 
@@ -75,8 +74,7 @@ Depoyu klonlayın.
 Proje klasörüne gidin.
 node index.js kullanarak betiği çalıştırın. İstendiği gibi --dryRun ve --autoUpdate bayraklarını kullanın.
 
-
- ## Örnek Rapor İçeriği
+## Örnek Rapor İçeriği
 
 ```json
 {
